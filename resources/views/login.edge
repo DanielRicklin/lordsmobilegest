@@ -1,0 +1,32 @@
+@layout('main')
+
+@section('content')
+    <div class="container">
+        @if(flashMessage('successMessage'))
+            <div class="alert alert-success mb-4">{{ flashMessage('successMessage') }}</div>
+        @endif
+        @if(hasErrorFor('pseudo'))
+            <div class="alert alert-danger mb-2 mt-2">{{ getErrorFor('pseudo') }}</div>
+        @endif
+        @if(hasErrorFor('password'))
+            <div class="alert alert-danger mb-2 mt-2">{{ getErrorFor('password') }}</div>
+        @endif
+    </div>
+    <main role="main" class="text-center container main-signin">
+    <form class="form-signin" method="POST" action="{{ route('login.store') }}">
+            {{ csrfField() }}
+            <img class="mb-4" src="img/Lords_Mobile_logo.png" alt="LordsMobileLogo">
+            <h1 class="h3 mb-3 font-weight-normal">Connectez vous</h1>
+
+            <label for="pseudo" class="sr-only">Pseudo</label>
+            <input type="pseudo" id="pseudo" class="form-control" name="pseudo" placeholder="Pseudo" value="{{ old('pseudo') }}" required autofocus>
+
+            <label for="password" class="sr-only">Mot de passe</label>
+            <input type="password" id="password" class="form-control" name="password" placeholder="Mot de passe" required>
+
+            <a href="{{ route('register.create') }}" class="badge badge-light mb-2">S'inscrire</a>
+            <button class="btn btn-lg btn-dark btn-block" type="submit">Se connecter</button>
+            <p class="mt-5 mb-3 text-muted">&copy; DBB - 2019</p>
+        </form>
+    </main>
+@endsection

@@ -1,0 +1,36 @@
+@layout('main')
+
+@section('content')
+    <div class="container">
+        @if(flashMessage('successMessage'))
+            <div class="alert alert-success mb-4">{{ flashMessage('successMessage') }}</div>
+        @endif
+        @if(hasErrorFor('username'))
+            <div class="alert alert-danger mb-2 mt-2">{{ getErrorFor('username') }}</div>
+        @endif
+        @if(hasErrorFor('password'))
+            <div class="alert alert-danger mb-2 mt-2">{{ getErrorFor('password') }}</div>
+        @endif
+    </div>
+    <main role="main" class="text-center container">
+    <form class="form-signup" method="POST" action="{{ route('register.store') }}">
+            {{ csrfField() }}
+            
+            <img class="mb-4" src="img/Lords_Mobile_logo.png" alt="LordsMobileLogo">
+            <h1 class="h3 mb-3 font-weight-normal">Inscrivez vous</h1>
+
+            <label for="username" class="sr-only">Pseudo</label>
+            <input type="username" id="username" class="form-control" name="username" placeholder="Pseudo" value="{{ old('username') }}" required autofocus>
+
+            <label for="password" class="sr-only">Mot de passe</label>
+            <input type="password" id="password" class="form-control" name="password" placeholder="Mot de passe" required>
+
+            <label for="password-confirm" class="sr-only">Mot de passe</label>
+            <input type="password" id="password-confirm" class="form-control" name="password_confirmation" placeholder="Confirmez le mot de passe" required>
+
+            <button class="btn btn-lg btn-dark btn-block" type="submit">S'inscrire</button>
+
+            <p class="mt-5 mb-3 text-muted">&copy; DBB - 2019</p>
+        </form>
+    </main>
+@endsection
