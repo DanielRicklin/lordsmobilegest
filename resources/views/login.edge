@@ -1,17 +1,25 @@
 @layout('main')
 
 @section('content')
-    <div class="container">
+    
         @if(flashMessage('successMessage'))
-            <div class="alert alert-success mb-4">{{ flashMessage('successMessage') }}</div>
+            <div class="container">
+                <div class="alert alert-success mb-4">{{ flashMessage('successMessage') }}</div>
+            </div>
         @endif
-        @if(hasErrorFor('pseudo'))
-            <div class="alert alert-danger mb-2 mt-2">{{ getErrorFor('pseudo') }}</div>
-        @endif
+        {{--  
+            @if(hasErrorFor('username'))
+            <div class="container">
+                <div class="alert alert-danger mb-2 mt-2">Pseudo inconnu</div>
+            </div>
+        @endif  
+        --}}
         @if(hasErrorFor('password'))
-            <div class="alert alert-danger mb-2 mt-2">{{ getErrorFor('password') }}</div>
+            <div class="container">
+                <div class="alert alert-danger mb-2 mt-2">Mauvais mot de passe</div>
+            </div>
         @endif
-    </div>
+    
     <main role="main" class="text-center container main-signin">
     <form class="form-signin" method="POST" action="{{ route('login.store') }}">
             {{ csrfField() }}

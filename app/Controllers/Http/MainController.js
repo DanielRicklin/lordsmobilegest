@@ -2,7 +2,7 @@
 
 class MainController {
 
-    home({ view }) {
+    home({ request, response, view}) {
         return view.render('home')
     }
 

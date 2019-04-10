@@ -18,7 +18,15 @@
             --}}
         </ul>
         {{--  <form class="form-inline mt-2 mt-md-0">  --}}
-        <a class="btn btn-outline-light my-2 my-sm-0" href="{{ route('login') }}">Se connecter</a>
+        
+        @loggedIn
+        <form action="{{ route('logout')}}" method="POST">
+            {{ csrfField() }}
+            <button class="btn btn-outline-light my-2 my-sm-0">Logout</button>
+        </form>
+        @else
+            <a class="btn btn-outline-light my-2 my-sm-0" href="{{ route('login.create') }}">Se connecter</a>
+        @endloggedIn
         {{--  </form>  --}}
     </div>
 </nav>

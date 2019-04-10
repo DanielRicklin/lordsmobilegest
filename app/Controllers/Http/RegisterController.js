@@ -45,13 +45,13 @@ class RegisterController {
    */
   async store ({ request, response, session }) {
     const user = await User.create({
-        username: request.input('pseudo'),
+        username: request.input('username'),
         password: request.input('password')
     })
 
-    session.flash({ successMessage: "Compte crée !" })
+    session.flash({ successMessage: 'Compte crée ! ${password}' })
 
-    return response.route('login')
+    return response.route('login.create')
   }
 
   /**

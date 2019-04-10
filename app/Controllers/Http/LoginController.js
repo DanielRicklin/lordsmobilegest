@@ -42,15 +42,14 @@ class LoginController {
    * @param {Response} ctx.response
    */
   async store ({ request, response, auth, session }) {
-    const user = await auth.attempt(request.input('pseudo'), request.input('password'))
+    await auth.attempt(request.input('username'), request.input('password'))
 
     // checker remember
     // https://www.youtube.com/watch?v=dqWLo5LR5dk
 
-    if(user){
-      session.flash({ successMessage: 'Vous avez bien été connecté'})
-      return response.route('home')
-    }
+    
+    session.flash({ successMessage: 'Vous avez bien été connecté'})
+    return response.route('home')
   }
 
   /**
@@ -96,7 +95,10 @@ class LoginController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params, request, response, auth }) {
+    await auth.logout()
+
+    return response.route('login.store')
   }
 }
 
