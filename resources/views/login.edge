@@ -2,27 +2,22 @@
 
 @section('content')
     
-        @if(flashMessage('successMessage'))
-            <div class="container">
-                <div class="alert alert-success mb-4">{{ flashMessage('successMessage') }}</div>
-            </div>
-        @endif
-        {{--  
-            @if(hasErrorFor('username'))
-            <div class="container">
-                <div class="alert alert-danger mb-2 mt-2">Pseudo inconnu</div>
-            </div>
-        @endif  
-        --}}
-        @if(hasErrorFor('password'))
-            <div class="container">
-                <div class="alert alert-danger mb-2 mt-2">Mauvais mot de passe</div>
-            </div>
-        @endif
+    @if(flashMessage('successMessage'))
+        <div class="container">
+            <div class="alert alert-success mb-4">{{ flashMessage('successMessage') }}</div>
+        </div>
+    @endif
+    @if(flashMessage('notification'))
+        <div class="container">
+            <div class="alert alert-{{ flashMessage('notification.type') }} mb-4">{{ flashMessage('notification.message') }}</div>
+        </div>
+    @endif
     
     <main role="main" class="text-center container main-signin">
-    <form class="form-signin" method="POST" action="{{ route('login.store') }}">
+        <form class="form-signin" method="POST" action="{{ route('login.store') }}">
+
             {{ csrfField() }}
+            
             <img class="mb-4" src="img/Lords_Mobile_logo.png" alt="LordsMobileLogo">
             <h1 class="h3 mb-3 font-weight-normal">Connectez vous</h1>
 
@@ -30,7 +25,14 @@
             <input type="pseudo" id="pseudo" class="form-control" name="pseudo" placeholder="Pseudo" value="{{ old('pseudo') }}" required autofocus>
 
             <label for="password" class="sr-only">Mot de passe</label>
-            <input type="password" id="password" class="form-control" name="password" placeholder="Mot de passe" required>
+            <input type="password" id="password" class="form-control mb" name="password" placeholder="Mot de passe" required>
+
+            <div class="checkbox mb-1">
+                <label>
+                    <input type="checkbox" name="remember">
+                    Remember me
+                </label>
+            </div>
 
             <a href="{{ route('register.create') }}" class="badge badge-light mb-2">S'inscrire</a>
             <button class="btn btn-lg btn-dark btn-block" type="submit">Se connecter</button>

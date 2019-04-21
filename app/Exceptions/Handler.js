@@ -30,6 +30,11 @@ class ExceptionHandler extends BaseExceptionHandler {
     if(error.name === 'HttpException') {
       return response.redirect('/')
     }
+
+    if (error.name === 'PasswordMisMatch') {
+      console.log('error mot de passe')
+      return session.flash({ passwordError: 'Mauvais mot de passe' })
+    }
   }
 
   /**

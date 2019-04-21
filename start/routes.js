@@ -26,6 +26,10 @@ Route.group(()=> {
 
 Route.group(()=> {
     Route.get('/', 'MainController.home').as('home')
+
+    Route.get('/profil', 'ProfilController.index').as('profil')
+    Route.patch('/profil', 'ProfilController.update').as('profil.update')
+
     Route.post('/logout', 'LoginController.destroy').as('logout')
 }).middleware(['auth'])
 

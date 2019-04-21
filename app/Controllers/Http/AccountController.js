@@ -1,18 +1,16 @@
 'use strict'
 
-const User = use('App/Models/User')
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 /**
- * Resourceful controller for interacting with registers
+ * Resourceful controller for interacting with accounts
  */
-class RegisterController {
+class AccountController {
   /**
-   * Show a list of all registers.
-   * GET registers
+   * Show a list of all accounts.
+   * GET accounts
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -23,8 +21,8 @@ class RegisterController {
   }
 
   /**
-   * Render a form to be used for creating a new register.
-   * GET registers/create
+   * Render a form to be used for creating a new account.
+   * GET accounts/create
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -32,31 +30,22 @@ class RegisterController {
    * @param {View} ctx.view
    */
   async create ({ request, response, view }) {
-      return view.render('register')
   }
 
   /**
-   * Create/save a new register.
-   * POST registers
+   * Create/save a new account.
+   * POST accounts
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response, session }) {
-    const user = await User.create({
-        username: request.input('username'),
-        password: request.input('password')
-    })
-
-    session.flash({ successMessage: 'Compte crée !' })
-
-    return response.route('login.create')
+  async store ({ request, response }) {
   }
 
   /**
-   * Display a single register.
-   * GET registers/:id
+   * Display a single account.
+   * GET accounts/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -67,8 +56,8 @@ class RegisterController {
   }
 
   /**
-   * Render a form to update an existing register.
-   * GET registers/:id/edit
+   * Render a form to update an existing account.
+   * GET accounts/:id/edit
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -79,8 +68,8 @@ class RegisterController {
   }
 
   /**
-   * Update register details.
-   * PUT or PATCH registers/:id
+   * Update account details.
+   * PUT or PATCH accounts/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -90,8 +79,8 @@ class RegisterController {
   }
 
   /**
-   * Delete a register with id.
-   * DELETE registers/:id
+   * Delete a account with id.
+   * DELETE accounts/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -101,4 +90,4 @@ class RegisterController {
   }
 }
 
-module.exports = RegisterController
+module.exports = AccountController

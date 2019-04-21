@@ -1,5 +1,8 @@
 'use strict'
 
+const User = use('App/Models/User')
+const Hash = use('Hash')
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -42,14 +45,56 @@ class LoginController {
    * @param {Response} ctx.response
    */
   async store ({ request, response, auth, session }) {
-    await auth.attempt(request.input('username'), request.input('password'))
-
-    // checker remember
-    // https://www.youtube.com/watch?v=dqWLo5LR5dk
-
     
-    session.flash({ successMessage: 'Vous avez bien été connecté'})
-    return response.route('home')
+    const { remember, password, pseudo } = request.all()
+
+    // if(await User.findByOrFail('username', pseudo)){
+    //   await auth.attempt(pseudo, password)
+
+    //   return response.route('home')
+    // } else {
+
+    //   response.status(400).json({
+    //     status: 'error',
+    //     message: 'Invalid username'
+    //   })
+    // }
+
+    const user = await User.query()
+      .where('username', pseudo)
+      .first()
+
+    if (user) {
+      
+      const passwordVerified = await Hash.verify(password, user.password)
+
+      if (passwordVerified) {
+
+        await auth.remember(!!remember).login(user)
+
+        return response.route('home')
+      } else {
+
+        session.flash({
+          notification: {
+            type: 'danger',
+            message: `Le mot de passe n'est pas bon 🙁`
+          }
+        })
+    
+        return response.redirect('back')
+      }
+    } else {
+      session.flash({
+        notification: {
+          type: 'danger',
+          message: `L'utilisateur n'existe pas 🙁`
+        }
+      })
+
+      return response.redirect('back')
+    }
+
   }
 
   /**

@@ -17,13 +17,29 @@
             </li>  
             --}}
         </ul>
-        {{--  <form class="form-inline mt-2 mt-md-0">  --}}
+
         
         @loggedIn
-        <form action="{{ route('logout')}}" method="POST">
-            {{ csrfField() }}
-            <button class="btn btn-outline-light my-2 my-sm-0">Logout</button>
-        </form>
+            <div class="btn-group text-white">
+                <div class="menu-parent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn my-2 my-sm-0"></button>
+                    <i class="fas fa-bars fa-2x" style="width: 100%"></i>
+                </div>
+                {{--  
+                    Regler outline
+                    --}}
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{{ route('profil') }}">Profil</a>
+                    <button class="dropdown-item" type="button" id="logoutButton">Logout</button>
+                    {{--  
+                        <form class="dropdown-item" action="{{ route('logout')}}" method="POST">
+                        {{ csrfField() }}
+                        <span type="submit" class="logout-span">Logout</span>
+                    </form>  
+                    --}}
+                    <button class="dropdown-item" >Something else here</button>
+                </div>
+            </div>
         @else
             <a class="btn btn-outline-light my-2 my-sm-0" href="{{ route('login.create') }}">Se connecter</a>
         @endloggedIn
