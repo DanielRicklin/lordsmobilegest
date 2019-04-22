@@ -24,8 +24,6 @@ class ProfilController {
     const user = await User.find(auth.current.user.id)
     const accounts = await user.accounts().fetch()
 
-    console.log(accounts)
-
     return view.render('profil', { accounts })
   }
 
@@ -87,8 +85,6 @@ class ProfilController {
   async update ({ params, request, response, auth, session }) {
 
     const { pseudo, email, password } = request.all()
-
-    console.log(request.all())
 
     try {
 

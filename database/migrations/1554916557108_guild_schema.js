@@ -7,6 +7,7 @@ class GuildSchema extends Schema {
   up () {
     this.create('guilds', (table) => {
       table.increments()
+      table.integer('user_id_creator').notNullable()
       table.string('guildname', 80).notNullable().unique()
       table.string('nationality', 80).notNullable().unique()
       table.timestamps()

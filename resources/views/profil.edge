@@ -22,18 +22,18 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="pseudo" class="sr-only">Pseudo</label>
-                    <input type="pseudo" id="pseudo" class="form-control" name="pseudo" placeholder="Pseudo" value="{{ auth.user.username }}" required>
+                    <label for="pseudoProfil">Pseudo</label>
+                    <input type="pseudo" id="pseudoProfil" class="form-control" name="pseudo" placeholder="Pseudo" value="{{ auth.user.username }}" required>
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="email" class="sr-only">Email</label>
-                    <input type="email" id="email" class="form-control" name="email" placeholder="Email" value="{{ auth.user.email }}" required>
+                    <label for="emailProfil">Email</label>
+                    <input type="email" id="emailProfil" class="form-control" name="email" placeholder="Email" value="{{ auth.user.email }}" required>
                 </div>
 
                 <div class="form-group col-md-12">
-                    <label for="password" class="sr-only">Mot de passe</label>
-                    <input type="password" id="password" class="form-control mb" name="password" placeholder="Mot de passe">
+                    <label for="passwordProfil">Mot de passe</label>
+                    <input type="password" id="passwordProfil" class="form-control mb" name="password" placeholder="Mot de passe">
                 </div>
 
                 <div class="form-group col-md-12">
@@ -43,37 +43,59 @@
         </form>
 
         <hr class="mt-5" />
+        
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <h1>Compte(s)</h1>
+            </div>
+        </div>
 
-        <form method="POST" action="{{ route('account.update') }}?_method=PATCH" class="mt-4">
-            {{ csrfField() }}
-            <div class="form-row">
-                <div class="form-group col-md-12">
-                    <h1>Compte(s)</h1>
-                </div>
-
-                @each(account in accounts)
-
+            @if(accounts.rows)
+                @each(account in accounts.rows)
+                    <form method="POST" action="{{ route('account.update') }}?_method=PATCH">
+                        <div class="form-row">
+                            {{ csrfField() }}
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="pseudo" placeholder="Pseudo" value="{{ account.username }}" required>
+                            </div>
+            
+                            <div class="form-group col-md-5">
+                                <input type="number" class="form-control" name="igg_id" placeholder="IGG ID" value="{{ account.igg_id }}" readonly>
+                            </div>
+            
+                            <div class="form-group col-md-1">
+                                <button class="btn btn-dark btn-block" type="submit" name="data[save]"><i class="far fa-save"></i></button>
+                            </div>
+                            <div class="form-group col-md-1">
+                                <button class="btn btn-danger btn-block" type="submit" name="data[trash]"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </form>
                 @endeach
+            @endif
 
-                <div class="form-group col-md-6">
-                    <label for="pseudo" class="sr-only">Pseudo</label>
-                    <input type="text" id="pseudo" class="form-control" name="pseudo" placeholder="Pseudo" value="{{ accounts.username }}" required>
+            <form method="POST" action="{{ route('account.store') }}">
+                {{ csrfField() }}
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <input type="text" id="pseudo" class="form-control" name="pseudo" placeholder="Pseudo" required>
+                    </div>
+
+                    <div class="form-group col-md-5">
+                        <input type="number" id="iggid" class="form-control" name="igg_id" placeholder="IGG ID" required>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <button class="btn btn-dark btn-block" id="moreIggAccount"><i class="fas fa-plus"></i></button>
+                    </div>
                 </div>
+            </form>
 
-                <div class="form-group col-md-5">
-                    <label for="iggid" class="sr-only">IGG ID</label>
-                    <input type="number" id="iggid" class="form-control" name="iggid" placeholder="IGG ID" value="{{ accounts.iggid }}" required>
-                </div>
-
-                <div class="form-group col-md-1">
-                    <button class="btn btn-dark btn-block" id="moreIggAccount"><i class="fas fa-plus"></i></button>
-                </div>
-
+            {{--                  
                 <div class="form-group col-md-12">
                     <button class="btn btn-dark btn-block" type="submit">Enregistrer</button>
-                </div>
-            </div>
-        </form>
+                </div>  
+            --}}
         <p class="mt-5 mb-3 text-muted text-center">&copy; DBB - 2019</p>
     </main>
 

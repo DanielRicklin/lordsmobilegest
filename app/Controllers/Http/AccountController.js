@@ -1,5 +1,7 @@
 'use strict'
 
+const Account = use('App/Models/Account')
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -40,7 +42,37 @@ class AccountController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, response, auth, session }) {
+    const { pseudo, igg_id } = request.all()
+
+    try {
+      const account = new Account()
+
+      account.user_id = auth.current.user.id
+      account.username = pseudo
+      account.igg_id = igg_id
+
+      console.log(account)
+
+      await account.save()
+
+      session.flash({ 
+        notification: {
+          type: 'success',
+          message: 'Compte crée' 
+        }
+      })
+    }catch(error){
+      session.flash({ 
+        notification: {
+          type: 'danger',
+          message: 'Le compte n\'a pas été crée' 
+        }
+      })
+    }
+
+    return response.redirect('back')
+
   }
 
   /**
@@ -75,7 +107,42 @@ class AccountController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request, response, session }) {
+    const req = request.all()
+    
+    if(req.data.hasOwnProperty('save')){
+      let account = await Account.findBy('igg_id', req.igg_id)
+
+      if(account){
+        account.username = req.pseudo
+
+        await account.save()
+
+        session.flash({ 
+          notification: {
+            type: 'success',
+            message: 'Le compte a bien été mis à jour' 
+          }
+        })
+
+      } else {
+        session.flash({ 
+          notification: {
+            type: 'danger',
+            message: 'Le compte n\'a pas été mis à jour' 
+          }
+        })
+      }
+    } else if(req.data.hasOwnProperty('trash')){
+      let account = await Account.findBy('igg_id', req.igg_id)
+
+      if(account){
+        await account.delete()
+      }
+    }
+
+    return response.redirect('back')
+
   }
 
   /**
