@@ -1,18 +1,18 @@
 'use strict'
 
-const User = use('App/Models/User')
+const Guild = use('App/Models/Guild')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 /**
- * Resourceful controller for interacting with registers
+ * Resourceful controller for interacting with guilds
  */
-class RegisterController {
+class GuildController {
   /**
-   * Show a list of all registers.
-   * GET registers
+   * Show a list of all guilds.
+   * GET guilds
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -20,11 +20,14 @@ class RegisterController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+    let guilds = await Guild.query().limit(5).fetch()
+
+    return response.json(guilds)
   }
 
   /**
-   * Render a form to be used for creating a new register.
-   * GET registers/create
+   * Render a form to be used for creating a new guild.
+   * GET guilds/create
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -32,31 +35,41 @@ class RegisterController {
    * @param {View} ctx.view
    */
   async create ({ request, response, view }) {
-      return view.render('register')
+    
   }
 
   /**
-   * Create/save a new register.
-   * POST registers
+   * Create/save a new guild.
+   * POST guilds
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response, session }) {
-    const user = await User.create({
-        email: request.input('email'),
-        password: request.input('password')
-    })
+  async store ({ request, response }) {
+    const { guildname, nationality } = request.all()
+    console.log(request.all())
 
-    session.flash({ successMessage: 'Compte crée !' })
+    try{
+      let guild = new Guild()
 
-    return response.route('login.create')
+      guild.guildname = guildname
+      guild.nationality = nationality
+
+      console.log(guild)
+      
+      await guild.save()
+
+      return response.json(guild)
+
+    } catch(e){
+      return response.json("erreur")
+    }
   }
 
   /**
-   * Display a single register.
-   * GET registers/:id
+   * search a guild.
+   * GET guilds/:search
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -64,11 +77,14 @@ class RegisterController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
+    let guilds = await Guild.query().where('guildname', 'LIKE', `%${params.search}%`).fetch()
+
+    return response.json(guilds)
   }
 
   /**
-   * Render a form to update an existing register.
-   * GET registers/:id/edit
+   * Render a form to update an existing guild.
+   * GET guilds/:id/edit
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -79,8 +95,8 @@ class RegisterController {
   }
 
   /**
-   * Update register details.
-   * PUT or PATCH registers/:id
+   * Update guild details.
+   * PUT or PATCH guilds/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -90,8 +106,8 @@ class RegisterController {
   }
 
   /**
-   * Delete a register with id.
-   * DELETE registers/:id
+   * Delete a guild with id.
+   * DELETE guilds/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -101,4 +117,4 @@ class RegisterController {
   }
 }
 
-module.exports = RegisterController
+module.exports = GuildController

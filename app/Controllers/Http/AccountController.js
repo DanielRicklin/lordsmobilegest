@@ -52,8 +52,6 @@ class AccountController {
       account.username = pseudo
       account.igg_id = igg_id
 
-      console.log(account)
-
       await account.save()
 
       session.flash({ 

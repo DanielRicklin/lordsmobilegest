@@ -1,7 +1,10 @@
 'use strict'
 
+const uuidv4 = require('uuid/v4')
+
 const User = use('App/Models/User')
 const Hash = use('Hash')
+const Mail = use('Mail')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -46,7 +49,7 @@ class LoginController {
    */
   async store ({ request, response, auth, session }) {
     
-    const { remember, password, pseudo } = request.all()
+    const { remember, password, email } = request.all()
 
     // if(await User.findByOrFail('username', pseudo)){
     //   await auth.attempt(pseudo, password)
@@ -61,7 +64,7 @@ class LoginController {
     // }
 
     const user = await User.query()
-      .where('username', pseudo)
+      .where('email', email)
       .first()
 
     if (user) {
@@ -129,7 +132,39 @@ class LoginController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request, response, session }) {
+    const uuid = uuidv4()
+
+    const user = await User.query()
+      .where('email', request.input('emailforgotpwd'))
+      .first()
+
+    if(user){
+      await Mail.send('emails.welcome', { user: user.toJSON(), uuid: uuid }, (message) => {
+        message
+          .to(user.email)
+          .from('ricklin.daniel@gmail.com', 'Lords Mobile Gest')
+          .subject('Changement de mot de passe')
+      })
+
+      //! FAIRE UN LIEN UNIQUE CLIQUABLE QU'UNE FOIS, creer table avec uuid.v4
+
+      session.flash({
+        notification: {
+          type: 'success',
+          message: `Email envoyé, va checker (même les mails indésirables 😉)`
+        }
+      })
+    } else {
+      session.flash({
+        notification: {
+          type: 'danger',
+          message: `L'utilisateur n'existe pas 🙁`
+        }
+      })
+
+    }
+    return response.redirect('back')
   }
 
   /**

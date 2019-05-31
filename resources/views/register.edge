@@ -5,8 +5,8 @@
         @if(flashMessage('successMessage'))
             <div class="alert alert-success mb-4">{{ flashMessage('successMessage') }}</div>
         @endif
-        @if(hasErrorFor('username'))
-            <div class="alert alert-danger mb-2 mt-2">{{ getErrorFor('username') }}</div>
+        @if(hasErrorFor('email'))
+            <div class="alert alert-danger mb-2 mt-2">{{ getErrorFor('email') }}</div>
         @endif
         @if(hasErrorFor('password'))
             <div class="alert alert-danger mb-2 mt-2">{{ getErrorFor('password') }}</div>
@@ -19,8 +19,8 @@
             <img class="mb-4" src="img/Lords_Mobile_logo.png" alt="LordsMobileLogo">
             <h1 class="h3 mb-3 font-weight-normal">Inscrivez vous</h1>
 
-            <label for="username" class="sr-only">Pseudo</label>
-            <input type="username" id="username" class="form-control" name="username" placeholder="Pseudo" value="{{ old('username') }}" required autofocus>
+            <label for="email" class="sr-only">Email</label>
+            <input type="email" id="email" class="form-control" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
 
             <label for="password" class="sr-only">Mot de passe</label>
             <input type="password" id="password" class="form-control" name="password" placeholder="Mot de passe" required>

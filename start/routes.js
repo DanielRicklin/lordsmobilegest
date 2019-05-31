@@ -22,9 +22,14 @@ Route.group(()=> {
 
     Route.get('/login', 'LoginController.create').as('login.create')
     Route.post('/login', 'LoginController.store').as('login.store')
+    Route.patch('/login', 'LoginController.update').as('login.password')
+
 }).middleware(['guest'])
 
 Route.group(()=> {
+    Route.get('/guildsearch/:search', 'GuildController.show')
+    Route.get('/guilds', 'GuildController.index')
+
     Route.get('/', 'MainController.home').as('home')
 
     Route.get('/profil', 'ProfilController.index').as('profil')
@@ -32,6 +37,7 @@ Route.group(()=> {
 
     Route.post('/account', 'AccountController.store').as('account.store')
     Route.patch('/account', 'AccountController.update').as('account.update')
+
 
     Route.post('/logout', 'LoginController.destroy').as('logout')
 }).middleware(['auth'])

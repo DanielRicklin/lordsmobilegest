@@ -21,8 +21,8 @@
             <img class="mb-4" src="img/Lords_Mobile_logo.png" alt="LordsMobileLogo">
             <h1 class="h3 mb-3 font-weight-normal">Connectez vous</h1>
 
-            <label for="pseudo" class="sr-only">Pseudo</label>
-            <input type="pseudo" id="pseudo" class="form-control" name="pseudo" placeholder="Pseudo" value="{{ old('pseudo') }}" required autofocus>
+            <label for="email" class="sr-only">Email</label>
+            <input type="email" id="email" class="form-control" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
 
             <label for="password" class="sr-only">Mot de passe</label>
             <input type="password" id="password" class="form-control mb" name="password" placeholder="Mot de passe" required>
@@ -35,8 +35,34 @@
             </div>
 
             <a href="{{ route('register.create') }}" class="badge badge-light mb-2">S'inscrire</a>
+            {{--  <button id="forgotpwd" class="badge badge-light mb-2">S'inscrire</button>  --}}
+            <a href="#" class="badge badge-light mb-2" data-toggle="modal" data-target="#modalpwd">Mot de passe oublié</a>
             <button class="btn btn-lg btn-dark btn-block" type="submit">Se connecter</button>
             <p class="mt-5 mb-3 text-muted">&copy; DBB - 2019</p>
         </form>
     </main>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalpwd" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Mot de passe oublié</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{{ route('login.password') }}?_method=PATCH">
+                    {{ csrfField() }}
+                    <div class="modal-body">
+                        <label for="emailforgotpwd">Email</label>
+                        <input type="email" id="emailforgotpwd" class="form-control" name="emailforgotpwd" required/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-dark">Envoyer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection

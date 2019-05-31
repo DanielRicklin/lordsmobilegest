@@ -10,6 +10,8 @@ class AccountSchema extends Schema {
       table.integer('user_id').notNullable()
       table.string('username', 80).notNullable().unique()
       table.string('igg_id', 80).notNullable().unique()
+      table.integer('guild_id')
+      table.string('guildname', 80)
       table.timestamps()
     })
   }
