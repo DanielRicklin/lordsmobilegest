@@ -3,8 +3,10 @@
 const uuidv4 = require('uuid/v4')
 
 const User = use('App/Models/User')
+const Pf = use('App/Models/Passwordforgotten')
 const Hash = use('Hash')
 const Mail = use('Mail')
+const Env = use('Env')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -121,7 +123,7 @@ class LoginController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit ({ params, request, response, view }) {
+  async editPassword ({ params, request, response, view }) {
   }
 
   /**
@@ -140,7 +142,12 @@ class LoginController {
       .first()
 
     if(user){
-      await Mail.send('emails.welcome', { user: user.toJSON(), uuid: uuid }, (message) => {
+      const pf = await Pf.create({
+        user_id: user.id,
+        uuid: uuid
+      })
+
+      await Mail.send('emails.mdp', { user: user.toJSON(), uuid: uuid, link: Env.get('APP_URL') }, (message) => {
         message
           .to(user.email)
           .from('ricklin.daniel@gmail.com', 'Lords Mobile Gest')

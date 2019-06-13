@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class Passwordforgotten extends Model {
+    static get table() {
+        return "passwordforgotten"
+    }
 }
 
 module.exports = Passwordforgotten

@@ -23,7 +23,7 @@
 
                 <div class="form-group col-md-6">
                     <label for="pseudoProfil">Pseudo</label>
-                    <input type="pseudo" id="pseudoProfil" class="form-control" name="pseudo" placeholder="Pseudo" value="{{ auth.user.username }}" required>
+                    <input type="pseudo" id="pseudoProfil" class="form-control" name="pseudo" placeholder="Pseudo" value="{{ auth.user.username ? auth.user.username : '' }}" required>
                 </div>
 
                 <div class="form-group col-md-6">

@@ -24,6 +24,9 @@ Route.group(()=> {
     Route.post('/login', 'LoginController.store').as('login.store')
     Route.patch('/login', 'LoginController.update').as('login.password')
 
+    Route.get('/pf/:uuid', 'PfController.show').as('pf.show')
+    Route.post('/pf/:uuid', 'PfController.edit').as('pf.edit')
+
 }).middleware(['guest'])
 
 Route.group(()=> {
@@ -38,8 +41,7 @@ Route.group(()=> {
     Route.post('/account', 'AccountController.store').as('account.store')
     Route.patch('/account', 'AccountController.update').as('account.update')
 
-
     Route.post('/logout', 'LoginController.destroy').as('logout')
 }).middleware(['auth'])
 
-
+Route.any('*', ({ view }) => view.render('404'))
