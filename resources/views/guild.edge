@@ -2,6 +2,78 @@
 
 @section('content')
 
-guild
+<main role="main" class="container">
+    <form method="POST" action="{{ route('guilds.create') }}" class="mt-5">
+        {{ csrfField() }}
+        <div class="form-row">
+            <div class="form-group col-md-12 mb-5">
+                <h1 class="d-inline">Les guildes </h1><a href="#" class="badge badge-light"  data-toggle="modal" data-target="#modalcreerguilde">Créer</a>
+            </div>
+
+            <table class="table col-md-12">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+    <p class="mt-5 mb-3 text-muted text-center">&copy; DBB - 2019</p>
+</main>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalcreerguilde" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Création d'une guilde</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="{{ route('guild.create') }}">
+                {{ csrfField() }}
+                <div class="modal-body">
+                    <label for="nomguilde">Nom de la guilde</label>
+                    <input type="text" id="nomguilde" class="form-control" name="nomguilde" required/>
+                    <label for="trigramme">Trigramme</label>
+                    <input type="text" id="trigramme" maxlength="3" class="form-control" name="trigramme" required/>
+                    <label for="nationality">Langue</label>
+                    <input type="text" id="nationality" maxlength="3" class="form-control" name="nationality" required/>
+                    <label for="nationality">Langue</label>
+                    <textarea class="form-control" name="nationality" id="nationality" required></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-dark">Envoyer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @endsection

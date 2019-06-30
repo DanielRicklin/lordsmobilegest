@@ -1,6 +1,7 @@
 'use strict'
 
 const User = use('App/Models/User')
+const { validate } = use('Validator')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -44,6 +45,22 @@ class RegisterController {
    * @param {Response} ctx.response
    */
   async store ({ request, response, session }) {
+    const rules = {
+      email: 'required|unique:users',
+      password: 'required|min:5|confirmed'
+    }
+
+    const validation = await validate(request.all(), rules)
+
+    if (validation.fails()) {
+      
+      session
+        .withErrors(validation.messages())
+        .flashExcept(['password'])
+
+      return response.redirect('back')
+    } 
+
     const user = await User.create({
         email: request.input('email'),
         password: request.input('password')

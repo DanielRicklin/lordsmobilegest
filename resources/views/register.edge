@@ -6,10 +6,10 @@
             <div class="alert alert-success mb-4">{{ flashMessage('successMessage') }}</div>
         @endif
         @if(hasErrorFor('email'))
-            <div class="alert alert-danger mb-2 mt-2">{{ getErrorFor('email') }}</div>
+            <div class="alert alert-danger mb-2 mt-2">Cet email est déjà pris</div>
         @endif
         @if(hasErrorFor('password'))
-            <div class="alert alert-danger mb-2 mt-2">{{ getErrorFor('password') }}</div>
+            <div class="alert alert-danger mb-2 mt-2">Les mots de passes doivent corespondre et avoir minimum 5 caratères</div>
         @endif
     </div>
     <main role="main" class="text-center container">
@@ -20,13 +20,14 @@
             <h1 class="h3 mb-3 font-weight-normal">Inscrivez vous</h1>
 
             <label for="email" class="sr-only">Email</label>
-            <input type="email" id="email" class="form-control" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
+            <input type="email" id="email" class="form-control" name="email" placeholder="Email" value="{{ old('email') }}" autocomplete="email" required autofocus>
+            {{ elIf('<span>$self</span>', getErrorFor('email'), hasErrorFor('email')) }}
 
             <label for="password" class="sr-only">Mot de passe</label>
-            <input type="password" id="password" class="form-control" name="password" placeholder="Mot de passe" required>
+            <input type="password" id="password" class="form-control" name="password" placeholder="Mot de passe" autocomplete="new-password" required>
 
             <label for="password-confirm" class="sr-only">Mot de passe</label>
-            <input type="password" id="password-confirm" class="form-control" name="password_confirmation" placeholder="Confirmez le mot de passe" required>
+            <input type="password" id="password-confirm" class="form-control" name="password_confirmation" placeholder="Confirmez le mot de passe" autocomplete="new-password" required>
 
             <button class="btn btn-lg btn-dark btn-block" type="submit">S'inscrire</button>
 

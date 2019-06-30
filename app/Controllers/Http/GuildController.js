@@ -25,6 +25,11 @@ class GuildController {
     return response.json(guilds)
   }
 
+
+  async page ({ request, response, view }) {
+    return view.render('guild')
+  }
+
   /**
    * Render a form to be used for creating a new guild.
    * GET guilds/create

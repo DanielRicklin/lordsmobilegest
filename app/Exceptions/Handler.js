@@ -20,7 +20,7 @@ class ExceptionHandler extends BaseExceptionHandler {
    *
    * @return {void}
    */
-  async handle (error, { request, response }) {
+  async handle (error, { request, response, session }) {
     response.status(error.status).send(error.message)
 
     if(error.name === 'InvalidSessionException') {
@@ -31,10 +31,14 @@ class ExceptionHandler extends BaseExceptionHandler {
       return response.redirect('/')
     }
 
-    if (error.name === 'PasswordMisMatch') {
-      console.log('error mot de passe')
-      return session.flash({ passwordError: 'Mauvais mot de passe' })
-    }
+    // if (error.name === 'PasswordMisMatch') {
+    //   console.log('error mot de passe')
+    //   return session.flash({ passwordError: 'Mauvais mot de passe' })
+    // }
+
+    // if (error.name === 'ValidationException') {
+    //   return session.flash({ successMessage: 'Le mot de passe doit avoir au moins 5 caractères et ils doivent corespondre' })
+    // }
   }
 
   /**

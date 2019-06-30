@@ -18,7 +18,7 @@ const Route = use('Route')
 
 Route.group(()=> {
     Route.get('/register', 'RegisterController.create').as('register.create')
-    Route.post('/register', 'RegisterController.store').as('register.store').validator('Register')
+    Route.post('/register', 'RegisterController.store').as('register.store')
 
     Route.get('/login', 'LoginController.create').as('login.create')
     Route.post('/login', 'LoginController.store').as('login.store')
@@ -30,8 +30,11 @@ Route.group(()=> {
 }).middleware(['guest'])
 
 Route.group(()=> {
+    // Recherche de guilde
     Route.get('/guildsearch/:search', 'GuildController.show')
     Route.get('/guilds', 'GuildController.index')
+
+    Route.get('/guildes', 'GuildController.page').as('guildes')
 
     Route.get('/', 'MainController.home').as('home')
 

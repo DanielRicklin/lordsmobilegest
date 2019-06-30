@@ -23,17 +23,17 @@
 
                 <div class="form-group col-md-6">
                     <label for="pseudoProfil">Pseudo</label>
-                    <input type="pseudo" id="pseudoProfil" class="form-control" name="pseudo" placeholder="Pseudo" value="{{ auth.user.username ? auth.user.username : '' }}" required>
+                    <input type="pseudo" id="pseudoProfil" class="form-control" name="pseudo" placeholder="Pseudo" value="{{ auth.user.username ? auth.user.username : '' }}" autocomplete="username" required>
                 </div>
 
                 <div class="form-group col-md-6">
                     <label for="emailProfil">Email</label>
-                    <input type="email" id="emailProfil" class="form-control" name="email" placeholder="Email" value="{{ auth.user.email }}" required>
+                    <input type="email" id="emailProfil" class="form-control" name="email" placeholder="Email" value="{{ auth.user.email }}" autocomplete="email" required>
                 </div>
 
                 <div class="form-group col-md-12">
                     <label for="passwordProfil">Mot de passe</label>
-                    <input type="password" id="passwordProfil" class="form-control mb" name="password" placeholder="Mot de passe">
+                    <input type="password" id="passwordProfil" class="form-control mb" name="password" placeholder="Mot de passe" autocomplete="current-password">
                 </div>
 
                 <div class="form-group col-md-12">

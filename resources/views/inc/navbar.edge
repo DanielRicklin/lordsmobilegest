@@ -30,6 +30,8 @@
                     --}}
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="{{ route('profil') }}">Profil</a>
+                    <a class="dropdown-item" href="{{ route('guildes') }}">Guildes</a>
+                    <hr>
                     <button class="dropdown-item" type="button" id="logoutButton">Logout</button>
                     {{--  
                         <form class="dropdown-item" action="{{ route('logout')}}" method="POST">
@@ -37,7 +39,6 @@
                         <span type="submit" class="logout-span">Logout</span>
                     </form>  
                     --}}
-                    <button class="dropdown-item" >Something else here</button>
                 </div>
             </div>
         @else

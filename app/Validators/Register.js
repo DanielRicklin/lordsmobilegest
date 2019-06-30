@@ -17,6 +17,21 @@ class Register {
       'password.confirmed': 'Les mots de passe ne sont pas les mêmes'
     }
   }
+
+  async fails(errorMessages) {
+    console.log(this.ctx.response)
+    return this
+      .ctx
+      .response
+      .route('register.create', {
+        errorValidation: errorMessages[0].message
+      })
+
+    // return this
+    //   .ctx
+    //   .session
+    //   .flash({ successMessage: errorMessages[0].message })
+  }
 }
 
 module.exports = Register
